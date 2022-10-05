@@ -378,15 +378,45 @@ knitr::include_graphics("sapm.png")
 .pull-left[
 
 ```{r, echo = F, fig.align='center',  out.width='93%'}
-knitr::include_graphics("comus.png")
+knitr::include_graphics("veinco.png")
 ```
 
 ]
 
 .pull-right[
 ```{r, echo = F, fig.align='center',  out.width='93%'}
-knitr::include_graphics("nomus.png")
+knitr::include_graphics("veinno.png")
 ```
+]
+
+
+---
+## Speciation
+
+.pull-left[
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("veinhc.png")
+```
+
+]
+
+.pull-right[
+```{r, eval = F, fig.align='center',  out.width='93%'}
+dx <- speciate(x = x, spec = "nmhc",
+  fuel = "G", veh = "LDV", eu = "II")
+unique(dx$pol) # g/km2
+# ethane propane butane isobuntane... 
+```
+
+mech options: "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1", "CBMZ", "CB05opt2"
+
+```{r, eval = F, fig.align='center',  out.width='93%'}
+vocE25EX <- emis_chem2(df = dx, mech = "MOZT1")
+unique(dx$group) # mol/km2
+# BENZENE BIGALK BIGENE BZALD ... 
+```
+
 ]
 
 ---
