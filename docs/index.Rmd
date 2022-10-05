@@ -122,17 +122,23 @@ class: inverse center middle
 ---
 class: center middle
 ## Formaldehyde: 0.059 Mt/y
-<img src="figuras/PM25.png" alt="drawing" height="600"/>
+```{r, echo = F, fig.align='center', out.width='90%'}
+knitr::include_graphics("figuras/PM25.png")
+```
 
 ---
 class: center middle
 ## NP 50 nm: 1.58E+26 /y
-<img src="figuras/N_50nm_urban.png" alt="drawing" height="600"/>
+```{r, echo = F, fig.align='center', out.width='90%'}
+knitr::include_graphics("figuras/N_50nm_urban.png")
+```
 
 ---
 class: center middle
 ## NorthEast China
-<img src="figuras/fig7.png" alt="drawing" height="600"/>
+```{r, echo = F, fig.align='center', out.width='90%'}
+knitr::include_graphics("figuras/fig7.png")
+```
 
 ---
 
@@ -244,7 +250,6 @@ mapview::mapview(net["PC"],
 
 
 .pull-left[
-
 ```{r, echo = F, fig.align='center',  out.width='90%'}
 knitr::include_graphics("figuras/SPEED.png")
 ```
@@ -252,8 +257,6 @@ knitr::include_graphics("figuras/SPEED.png")
 ]
 
 .pull-right[
-
-
 ```{r, echo = F, fig.align='center', out.width='90%'}
 knitr::include_graphics("figuras/SPEEDBIN.png")
 ```
@@ -379,10 +382,12 @@ knitr::include_graphics("comus.png")
 ```
 
 ]
+
 .pull-right[
 ```{r, echo = F, fig.align='center',  out.width='93%'}
 knitr::include_graphics("nomus.png")
 ```
+]
 
 ---
 class invser center middle
@@ -396,4 +401,4 @@ class invser center middle
     - https://www.researchgate.net/profile/Sergio_Ibarra-Espinosa
     - https://orcid.org/0000-0002-3162-1905
 
-
+  

@@ -1,0 +1,412 @@
+---
+title: "VEIN model and future integration with MUSICA"
+author: 
+  - "Sergio Ibarra-Espinosa¹ ²"
+  - "1 CIRES, University of Colorado-Boulder"
+  - "2 GML, National Oceanic and Atmospheric Administration (NOAA)"
+output:
+  revealjs::revealjs_presentation:
+    css: css.css
+    theme: serif
+    transition: fade
+    highlight: pygments
+    center: true
+    reveal_options:
+      slideNumber: true
+      previewLinks: true
+---
+
+
+
+<div id="center">
+
+VEIN model and future integration with MUSICA
+
+    - Sergio Ibarra-Espinosa¹'²
+    - 1 CIRES, University of Colorado-Boulder
+    - 2 GML, National Oceanic and Atmospheric Administration (NOAA)
+    - sergio.ibarra-espinosa@noaa.gov
+    
+    - Presentation for MUSICA group, ACOM/NCAR
+
+</div>
+
+<img src="https://atmoschem.github.io/vein/reference/figures/logo.png" alt="drawing" height="100"/>
+<img src="logo.png" alt="drawing" height="100"/>
+<img src="https://atmoschem.github.io/eixport/reference/figures/logo.gif" alt="drawing" height="100"/>
+<img src="https://www2.acom.ucar.edu/sites/default/files/styles/extra_large/public/images/MUSICAlogo_0.png" alt="drawing" height="100"/>
+<img src="https://ruc.noaa.gov/wrf/wrf-chem/wrfchem_logo.png" alt="drawing" height="100"/>
+
+
+
+# Introduction (2014)
+
+```{r, echo=FALSE, out.width='80%'}
+knitr::include_graphics("scheme1.png")
+```
+
+
+# Intro
+
+<div id="left">
+Why do we need MUSICA? 
+
+
+<div id="h3">
+Empirical and modeling studies have provided strong evidence of dynamical and chemical coupling across the range of     spatial and temporal scales inherent in the Earth System. Current models, however, are inadequate in accounting for     the two-way coupling of the range of relevant scales **from street-level to regional to global** and from the surface   up to the mesosphere.
+</div>
+
+</div>
+
+<div id="right">
+What is VEIN? 
+
+<div id="h3">
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vein)](http://cran.r-project.org/web/packages/vein) 
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/vein?color=orange)](http://cran.r-project.org/package=vein)
+
+- R package to calculate vehicular emissions
+- Includes Fortran subroutines with // OpenMP
+- Detailed speciation applying Carter [(2015)](https://www.tandfonline.com/doi/full/10.1080/10962247.2015.1013646)
+</div>
+
+</div>
+
+
+# vein
+
+![](https://atmoschem.github.io/all.gif)
+
+
+# Characteristics
+
+- Projects designed to produce comprehensiva inventories for people without knowledge in R 
+- Imports sf package with bindings to GEOS, GDAL, PROJ and UDUNITS
+- Imports data.table: [super fast] https://h2oai.github.io/db-benchmark/
+- main paper: https://gmd.copernicus.org/articles/11/2209/2018/
+- 33K dl, 3732 article views, 28 crossref
+- YouTube Channel https://www.youtube.com/channel/UC2oYaS9mpnIDk8w55O8_bTg
+
+# Process
+
+- Top down (POLYGON) and bottom-up (LINESTRING)
+- Activity adjusted by fuel consumption
+- Activity and emission factors by age of use
+- Includes methodolologies for China, US/EPA (MOVES), Brazil and Europe.
+- **Gridded emissions with any polygon shape**
+- Includes more than 10 chemical mechanisms
+
+# Atmoschem R packages
+
+
+<div id="left">
+- **eixport** reads spatial emissions and generates inptus for air quality models - such as WRF CHEM
+- **respeciate** Port the US/EPA Speciate 5.0 to R (no need of MS Access)
+- **cptcity** (7120 colour palettes from cptcity web archive)
+</div>
+
+<div id="right"><img src="https://atmoschem.github.io/eixport/reference/figures/logo.gif" alt="drawing" width="100"/>
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/eixport)](http://cran.r-project.org/web/packages/eixport) 
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eixport?color=orange)](http://cran.r-project.org/package=eixport)
+[![Github Stars](https://img.shields.io/github/stars/atmoschem/eixport.svg?style=social&label=Github)](https://github.com/atmoschem/eixport)
+
+<img src="logo.png" alt="drawing" width="100"/>
+
+<img src="https://camo.githubusercontent.com/43369365a280712734504191f0cedc3a6fb34844686089b30c726179810704eb/68747470733a2f2f692e696d6775722e636f6d2f347639574d51762e676966" alt="drawing" width="100"/>
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/cptcity)](http://cran.r-project.org/web/packages/cptcity) 
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/cptcity?color=orange)](http://cran.r-project.org/package=cptcity)
+[![Github Stars](https://img.shields.io/github/stars/ibarraespinosa/cptcity.svg?style=social&label=Github)](https://github.com/ibarraespinosa/cptcity)
+</div>
+
+
+
+# 
+<div id="center2">
+
+Some applications
+</div>
+
+
+
+## Formaldehyde: 0.059 Mt/y
+
+
+![](figuras/PM25.png)
+
+
+## NP 50 nm: 1.58E+26 /y
+
+
+![](figuras/N_50nm_urban.png)
+
+## NorthEast China
+
+<img src="figuras/fig7.png" alt="drawing" height="600"/>
+
+
+## Applications: Sao Paulo
+
+<div id="left">
+
+
+```{r, message = FALSE, warning=FALSE}
+library(sf)
+library(vein)
+x <- readRDS("rds/CO.rds")
+g <- st_sf(
+  geometry = st_make_grid(
+    x = x,
+    cellsize = 3000, 
+    square = F))
+co <- emis_grid(spobj = x,
+                g = g)
+```
+
+</div>
+
+<div id="right">
+
+```{r}
+plot(co[as.numeric(co$V9) > 0, "V9"],
+     axes = T, lty = 0)
+
+```
+
+</div>
+
+
+## WRF Chemi using eixport
+
+<video controls>
+<source src="wrfc.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+- **eixport** reads spatial emissions and generates inptus for air quality models such as WRF CHEM
+- <img src="https://atmoschem.github.io/eixport/reference/figures/logo.gif" alt="drawing" width="100"/>
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/eixport)](http://cran.r-project.org/web/packages/eixport) 
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/grand-total/eixport?color=orange)](http://cran.r-project.org/package=eixport)
+[![Package Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![Github Stars](https://img.shields.io/github/stars/atmoschem/eixport.svg?style=social&label=Github)](https://github.com/atmoschem/eixport)
+
+# 
+<div id="center2">
+
+Integration with US/EPA MOVES
+</div>
+
+## Recent Research: Integration of MOVES and VEIN:
+
+- MOVES is the official vehicular emissions model for US. Runs on Windows, written in Java/SQL with MariaDB. VEIN is very versatile, ideal for traffic flow at streets. Currently has two approaches: 
+- **1** Estimation using Windows with MOVES >3.0 installed. Emission factors are accessed using SQL in R.
+- **2** Estimation using any OS. Emission factors are exported from Windows as .csv.gz and read with `data.table::fread`.
+- Paper will be submitted to GMD (under development)
+
+## Screenshots
+
+```{r, eval = F, fig.align='center',  out.width='100%'}
+vein::get_project(directory = "sacramento", case = "moves")
+```
+
+
+<div id="left">
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("figuras/main.png")
+```
+
+</div>
+
+<div id="right">
+
+
+```{r, echo = F, fig.align='center', out.width='85%'}
+knitr::include_graphics("figuras/moves1.png")
+```
+
+</div>
+
+## Sacramento County 2017
+
+<div id="left">
+<div id="h4">
+- Traffic flow for a 4-stage travel demand model output for Sacramento Area, extracted for Sacramento County.'
+- Traffic flow is for 2016 from CARB. 
+- Traffic flow is total traffic volume 08:00-09:00.  
+- Vehicular composition based on baltimore.
+- Fuel consumption for 2017.
+- Emission factors from Baltimore 2017.
+- Temporal factors from hourly VMT MOVES Baltimore.
+- Assumed BPR parameters.
+</div>
+</div>
+
+<div id="right">
+
+```{r, echo = F, warning=FALSE, message=FALSE}
+net <- readRDS("rds/net.rds")
+net <- st_transform(net, 4326)
+
+mapview::mapview(net["PC"], 
+                 color = cptcity::cpt(pal = "mpl_viridis"),
+                 legend = FALSE)
+```
+</div>
+
+## Speed parameters
+
+
+<div id="left">
+
+```{r, echo = F, fig.align='center',  out.width='90%'}
+knitr::include_graphics("figuras/SPEED.png")
+```
+
+</div>
+
+<div id="right">
+
+
+```{r, echo = F, fig.align='center', out.width='90%'}
+knitr::include_graphics("figuras/SPEEDBIN.png")
+```
+
+</div>
+
+
+## Emissions
+
+
+<div id="left">
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("figuras/emisac.png")
+```
+
+</div>
+
+<div id="right">
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("figuras/no2mov.png")
+```
+
+</div>
+
+
+## Spatial Emissions
+
+
+```{r, echo = F, warning=FALSE, message=FALSE}
+library(sf)
+library(vein)
+co <- readRDS("rds/pollutantID_2.rds")
+l8 <- co[as.numeric(co$H8) > 0,"H8"]
+g <- st_sf(
+  geometry = st_make_grid(
+    x = l8,
+    cellsize = 3000, 
+    square = F))
+gco <- emis_grid(spobj = l8,
+                g = g)
+grid <- gco[as.numeric(gco$H8) > 0,"H8"]
+mapview::mapview(l8, 
+                 col.regions = cptcity::cpt(pal = "mpl_inferno"),
+                 legend = FALSE) + mapview::mapview(grid, 
+                 legend = FALSE)
+```
+
+
+# 
+<div id="center2">
+
+Some advances using MUSICA
+</div>
+
+
+## MUSICA run over South America
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("figuras/o3mus5.png")
+```
+
+## Geometry
+
+- The idea is to re-construct geometry from the NetCDF file.
+- Generate Well Known Text POLYGON, example:
+
+```{r, eval=F}
+POLYGON ((274.6966 -59.03607, 274.8997 -59.00577, 274.9453 -58.88916, 274.7924 -58.79595, 274.5942 -58.8158, 274.5485 -58.93235, 274.5485 -58.93235, 274.5485 -58.93235, 274.5485 -58.93235, 274.5485 -58.93235, 274.6966 -59.03607))
+
+```
+
+Corner Coordinates:
+
+```{r, eval=F}
+nc <- nc_open("/glade/p/cgd/amp/patc/GRID_REPO/ne0np4.SAMwrf01.ne30x2/grids/SAMwrf01_ne30x2_np4_SCRIP.nc")
+lat <- ncdf4::ncvar_get(nc, "grid_corner_lat")
+lat <- rbind(lat, lat[1, i])
+
+lon <- ncdf4::ncvar_get(nc, "grid_corner_lon")
+lon <- rbind(lon, lon[1, i])
+geo <- sf::st_polygon(list(cbind(lon, lat)))
+
+```
+
+## Time series
+
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("musser.png")
+```
+
+## 2014-08-18
+
+
+
+<div id="left">
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("sao3.png")
+```
+
+</div>
+
+<div id="right">
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("sapm.png")
+```
+
+</div>
+
+
+## VEIN emissions
+
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("comus.png")
+```
+
+
+## VEIN emissions
+
+
+```{r, echo = F, fig.align='center',  out.width='93%'}
+knitr::include_graphics("nomus.png")
+```
+
+# 
+<div id="center2">
+
+Gracias!
+
+    - https://ibarraespinosa.github.io/
+    - sergio.ibarra-espinosa@noaa.gov
+    - https://scholar.google.com.br/citations?user=8ohZGHEAAAAJ
+    - https://github.com/ibarraespinosa
+    - https://www.researchgate.net/profile/Sergio_Ibarra-Espinosa
+    - https://orcid.org/0000-0002-3162-1905
+
+
+</div>
