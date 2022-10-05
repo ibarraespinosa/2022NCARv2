@@ -60,6 +60,13 @@ class: inverse center middle
 <img src="https://ruc.noaa.gov/wrf/wrf-chem/wrfchem_logo.png" alt="drawing" height="100"/>
 
 ---
+class: centered inverse middle
+
+> “Emission inventories are easily seen as the scapegoat if a mismatch is found between modelled and observed concentrations of air pollutants”. 
+
+ Pulles, Tim, and Dick Heslinga. "The art of emission inventorying." TNO, Utrecht (2010): 29-53.
+ 
+---
 # Intro
 
 .pull-left[
