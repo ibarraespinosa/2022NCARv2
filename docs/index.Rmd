@@ -307,7 +307,7 @@ knitr::include_graphics("figuras/no2mov.png")
 ## Spatial Emissions
 
 
-```{r, echo = F, warning=FALSE, message=FALSE}
+```{r, echo = F, message = F, fig.align='center',  fig.height=7, fig.width=6}
 library(sf)
 library(vein)
 co <- readRDS("rds/pollutantID_2.rds")
