@@ -41,6 +41,25 @@ library(vein)
 
 
 
+class: inverse center middle
+## VEIN model and future integration with MUSICA
+
+> Sergio Ibarra-Espinosa¹'²
+<br>
+> 1 CIRES, University of Colorado-Boulder<br>
+> 2 GML, National Oceanic and Atmospheric Administration (NOAA)<br>
+> sergio.ibarra-espinosa@noaa.gov<br>
+    
+> Presentation for MUSICA group, ACOM/NCAR
+
+
+<img src="https://atmoschem.github.io/vein/reference/figures/logo.png" alt="drawing" height="100"/>
+<img src="logo.png" alt="drawing" height="100"/>
+<img src="https://atmoschem.github.io/eixport/reference/figures/logo.gif" alt="drawing" height="100"/>
+<img src="https://www2.acom.ucar.edu/sites/default/files/styles/extra_large/public/images/MUSICAlogo_0.png" alt="drawing" height="100"/>
+<img src="https://ruc.noaa.gov/wrf/wrf-chem/wrfchem_logo.png" alt="drawing" height="100"/>
+
+---
 # Intro
 
 .pull-left[
@@ -61,6 +80,7 @@ Empirical and modeling studies have provided strong evidence of dynamical and ch
 - R package to calculate vehicular emissions
 - Includes Fortran subroutines with // OpenMP
 - Detailed speciation applying Carter [(2015)](https://www.tandfonline.com/doi/full/10.1080/10962247.2015.1013646)
+- 13 direct publication [RG][https://www.researchgate.net/project/VEIN-An-R-package-for-vehicular-emissions-inventories]
 ]
 
 ---
@@ -122,30 +142,26 @@ class: inverse center middle
 ---
 class: center middle
 ## Formaldehyde: 0.059 Mt/y
-```{r, echo = F, fig.align='center', out.width='90%'}
-knitr::include_graphics("figuras/PM25.png")
-```
+
+<img src="figuras/PM25.png" alt="drawing" height="550"/>
 
 ---
 class: center middle
 ## NP 50 nm: 1.58E+26 /y
-```{r, echo = F, fig.align='center', out.width='90%'}
-knitr::include_graphics("figuras/N_50nm_urban.png")
-```
+
+<img src="figuras/N_50nm_urban.png" alt="drawing" height="550"/>
 
 ---
 class: center middle
 ## NorthEast China
-```{r, echo = F, fig.align='center', out.width='90%'}
-knitr::include_graphics("figuras/fig7.png")
-```
+<img src="figuras/fig7.png" alt="drawing" height="550"/>
 
 ---
 
 ## Applications: Sao Paulo
 
 .pull-left[
-```{r, message = FALSE, warning=FALSE}
+```{r, message = F, fig.align='center',  out.height='110%'}
 library(sf)
 library(vein)
 x <- readRDS("rds/CO.rds")
@@ -163,7 +179,7 @@ co <- emis_grid(spobj = x,
 
 .pull-right[
 
-```{r}
+```{r, message = F, fig.align='center',  fig.height=6, fig.width=8}
 plot(co[as.numeric(co$V9) > 0, "V9"],
      axes = T, lty = 0)
 
@@ -171,13 +187,15 @@ plot(co[as.numeric(co$V9) > 0, "V9"],
 ]
 
 ---
-
+class: center
 ## WRF Chemi using eixport
 
-<video controls>
-<source src="wrfc.mp4" type="video/mp4">
-Your browser does not support the video tag.
+
+<video width="520" height="440" controls>
+<source src="wrfc.mp4" type="video/mp4" height="550"/>
+  Your browser does not support the video tag.
 </video>
+
 
 ---
 class: inverse center middle
@@ -203,14 +221,14 @@ vein::get_project(directory = "sacramento", case = "moves")
 
 .pull-left[
 
-```{r, echo = F, fig.align='center',  out.width='93%'}
+```{r, echo = F, fig.align='center',  out.width='83%'}
 knitr::include_graphics("figuras/main.png")
 ```
 
 ]
 
 .pull-right[
-```{r, echo = F, fig.align='center', out.width='85%'}
+```{r, echo = F, fig.align='center', out.width='75%'}
 knitr::include_graphics("figuras/moves1.png")
 ```
 
@@ -219,7 +237,7 @@ knitr::include_graphics("figuras/moves1.png")
 
 ## Sacramento County 2017
 
-.pull-left[
+.left-column[
 
 - Traffic flow for a 4-stage travel demand model output for Sacramento Area, extracted for Sacramento County.'
 - Traffic flow is for 2016 from CARB. 
@@ -231,13 +249,12 @@ knitr::include_graphics("figuras/moves1.png")
 - Assumed BPR parameters.
 ]
 
-.pull-right[
+.right-column[
 
 
-```{r, echo = F, warning=FALSE, message=FALSE}
+```{r, echo = F, message = F, fig.align='center',  fig.height=6, fig.width=5}
 net <- readRDS("rds/net.rds")
 net <- st_transform(net, 4326)
-
 mapview::mapview(net["PC"], 
                  color = cptcity::cpt(pal = "mpl_viridis"),
                  legend = FALSE)
@@ -245,22 +262,16 @@ mapview::mapview(net["PC"],
 ]
 
 ---
-
+class: center
 ## Speed parameters
 
 
 .pull-left[
-```{r, echo = F, fig.align='center',  out.width='90%'}
-knitr::include_graphics("figuras/SPEED.png")
-```
-
+<img src="figuras/SPEED.png" alt="drawing" height="500"/>
 ]
 
 .pull-right[
-```{r, echo = F, fig.align='center', out.width='90%'}
-knitr::include_graphics("figuras/SPEEDBIN.png")
-```
-
+<img src="figuras/SPEEDBIN.png" alt="drawing" height="500"/>
 ]
 
 ---
@@ -377,16 +388,14 @@ knitr::include_graphics("sapm.png")
 
 .pull-left[
 
-```{r, echo = F, fig.align='center',  out.width='93%'}
-knitr::include_graphics("veinco.png")
-```
+<img src="veinco.png" alt="drawing" height="550"/>
 
 ]
 
 .pull-right[
-```{r, echo = F, fig.align='center',  out.width='93%'}
-knitr::include_graphics("veinno.png")
-```
+
+<img src="veinno.png" alt="drawing" height="550"/>
+
 ]
 
 
@@ -395,18 +404,16 @@ knitr::include_graphics("veinno.png")
 
 .pull-left[
 
-```{r, echo = F, fig.align='center',  out.width='93%'}
-knitr::include_graphics("veinhc.png")
-```
+<img src="veinhc.png" alt="drawing" height="550"/>
 
 ]
 
 .pull-right[
-```{r, eval = F, fig.align='center',  out.width='93%'}
+```{r, eval = F, fig.align='center',  out.height='83%'}
 dx <- speciate(x = x, spec = "nmhc",
   fuel = "G", veh = "LDV", eu = "II")
 unique(dx$pol) # g/km2
-# ethane propane butane isobuntane... 
+# ethane propane butane isobutane... 
 ```
 
 mech options: "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18B","RADM2", "RACM2","MOZT1", "CBMZ", "CB05opt2"
@@ -414,7 +421,9 @@ mech options: "CB4", "CB05", "S99", "S7","CS7", "S7T", "S11", "S11D","S16C","S18
 ```{r, eval = F, fig.align='center',  out.width='93%'}
 vocE25EX <- emis_chem2(df = dx, mech = "MOZT1")
 unique(dx$group) # mol/km2
-# BENZENE BIGALK BIGENE BZALD ... 
+# BENZENE BIGALK BIGENE BZALD C2H2 C2H4
+# C2H6  C3H6 C3H8 CH2O CH3CHO CH3COCH3
+# MACR MEK TOLUENE XYLENES 
 ```
 
 ]
